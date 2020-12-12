@@ -53,10 +53,14 @@ func (d deck) saveToFile(filename string) error {
 func newDeckFromFile(filename string) deck {
 	// assigning bs (byte slice) and err (error) to return values of ReadFile()
 	bs, err := ioutil.ReadFile(filename)
+	// below is very common pattern for error handling
 	if err != nil {
 		// Option #1 - log the error and return a call to newDeck()
 		// Option #2 - log the error and entirely quit program
 		fmt.Println("Error:", err)
 		os.Exit(1)
 	}
+	// notice type conversion: bs (byte slice) to string, and s (slice of strings) to deck type
+	s := strings.Split(string(bs), ",")
+	return deck(s)
 }
